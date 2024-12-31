@@ -1,0 +1,20 @@
+<svg width="677" height="788" viewBox="0 0 677 788" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Blob">
+<g id="Group 16">
+<circle id="Ellipse 2" cx="364.789" cy="378.408" r="156.383" fill="#4A3AFF"/>
+<circle id="Ellipse 4" cx="440.081" cy="529.01" r="156.383" fill="#702DFF"/>
+<circle id="Ellipse 3" cx="493.642" cy="372.627" r="156.383" fill="#2D5BFF"/>
+</g>
+<g id="Ellipse 5" filter="url(#filter0_b_1819_526)">
+<circle cx="393.819" cy="393.819" r="393.819" fill="white" fill-opacity="0.79"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_b_1819_526" x="-140.126" y="-140.126" width="1067.89" height="1067.89" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feGaussianBlur in="BackgroundImageFix" stdDeviation="70.063"/>
+<feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_1819_526"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_1819_526" result="shape"/>
+</filter>
+</defs>
+</svg>

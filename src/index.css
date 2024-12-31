@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+    font-family: "Poppins", serif;
+}
+html, body {
+    overflow-x: hidden;
+}
+body {
+    overflow-y: hidden;
+}
+
+#hero .gradient {
+    position: absolute;
+    border-radius: 50%;
+    background: #345ffa70;
+    box-shadow: -74px -74px #7139FA, -120px 18px #4C42FA;
+    right: 0;
+    top: 469px;
+}
+#hero .gradient::before {
+    content: "";
+    position: absolute;
+    top: -192px;
+    left: -254px;
+    width: 600px;
+    height: 600px;
+    backdrop-filter: blur(51px);
+    background: #0000;
+}
