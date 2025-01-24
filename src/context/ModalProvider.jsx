@@ -6,7 +6,7 @@ import {
     ModalHeader,
     ModalBody,
     useDisclosure
-} from "@nextui-org/react";
+} from "@heroui/react";
 
 import { RegisterUser } from "../components/Forms/RegisterUser";
 import { Login } from "../components/Forms/Login";

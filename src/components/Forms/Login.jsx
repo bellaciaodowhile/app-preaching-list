@@ -2,7 +2,7 @@ import {
     Button,
     Form, 
     Input
-} from "@nextui-org/react";
+} from "@heroui/react";
 
 export const Login = () => {
 

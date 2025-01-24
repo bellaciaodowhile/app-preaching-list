@@ -7,7 +7,7 @@ import {
     NavbarContent,
     NavbarItem,
     Button
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { Link as LinkRouter } from "react-router-dom";
 import { useContext } from "react";
 import { ModalContext } from '../context/ModalContext'

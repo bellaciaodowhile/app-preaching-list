@@ -1,4 +1,4 @@
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 import { useContext } from "react";
 import { TypeAnimation } from 'react-type-animation';
 import { ModalContext } from "../context/ModalContext";
@@ -35,14 +35,14 @@ export const Home = () => {
                 <div className="flex justify-center gap-6 z-10">
                     <Button
                     as={Link}
-                    className="bg-indigo-600 text-white" 
+                    className="bg-indigo-600 text-white hover:-translate-y-1 hover:shadow-md" 
                     radius="full" 
                     size="lg"
                     to={'/demo'}>
                         Probar ahora
                     </Button>
                     <Button 
-                    className="border-indigo-600 text-indigo-600" 
+                    className="border-indigo-600 text-indigo-600 hover:-translate-y-1 hover:shadow-md" 
                     radius="full"
                     variant="bordered"
                     size="lg"

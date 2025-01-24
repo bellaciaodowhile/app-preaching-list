@@ -2,7 +2,7 @@ import {
     Button,
     Form, 
     Input
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { useContext, useState } from "react";
 import { ModalContext } from "../../context/ModalContext";
 import { useForm } from "../../hooks/useForm";
