@@ -8,7 +8,11 @@ module.exports = {
         "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                primary: '#453DC6'
+            }
+        },
     },
     darkMode: "class",
     plugins: [heroui()]

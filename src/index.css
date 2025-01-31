@@ -29,3 +29,33 @@ body {
     backdrop-filter: blur(51px);
     background: #0000;
 }
+.dot::before {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, #a1a1a1, #0000);
+    top: 29px;
+    z-index: 0;
+}
+.dot-top::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 89px;
+    background: linear-gradient(to top, #a1a1a1, #0000);
+    top: -89px;
+    z-index: 0;
+}
+.checkbox-main span[aria-hidden] {
+    display: none;
+}
+#buttons-fixed {
+    box-shadow: 0 -30px 47px -40px #00000026;
+}
+.border-danger {
+    border: 1px solid #dc3545;
+}
+.border-info {
+    border: 1px solid #3a3ac8;
+}

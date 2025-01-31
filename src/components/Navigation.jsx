@@ -57,7 +57,7 @@ export const Navigation = () => {
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarBrand>
-                    <p className="font-bold text-inherit">Mobile</p>
+                    <p className="font-bold text-inherit">Logo</p>
                 </NavbarBrand>
                 {
                     navItems.map((item, index) => (
