@@ -1,0 +1,22 @@
+export const PREACHERS_INIT = [
+    { key: '1', label: 'Ted N. C. Wilson' },
+    { key: '2', label: 'Paul Ratsara' },
+    { key: '3', label: 'Juan Carlos Araya' },
+    { key: '4', label: 'Alberto Timm' },
+    { key: '5', label: 'Samuel Pippin' },
+    { key: '6', label: 'Luis A. Torres' },
+    { key: '7', label: 'Ricardo Graham' },
+    { key: '8', label: 'José Luis de la Rosa' },
+    { key: '9', label: 'Raúl M. García' },
+    { key: '10', label: 'Orlando Asher' },
+    { key: '11', label: 'Pablo C. C. A. Alvarado' },
+    { key: '12', label: 'Juan Carlos Vázquez' },
+    { key: '13', label: 'Guillermo Biaggi' },
+    { key: '14', label: 'Javier L. Castañeda' },
+    { key: '15', label: 'Jairo G. S. C. P. de la Rosa' },
+    { key: '16', label: 'Gabriel A. R. de la Cruz' },
+    { key: '17', label: 'Carlos A. M. de la Torre' },
+    { key: '18', label: 'Fernando C. de la Vega' },
+    { key: '19', label: 'Fabián F. C. de la Rosa' },
+    { key: '20', label: 'Ezequiel A. de la Torre' }
+];
