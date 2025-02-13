@@ -14,7 +14,7 @@ export const Home = () => {
         initial={{opacity: 0}}
         animate={{opacity: 1}}
         exit={{opacity: 0}}>  
-            <section id="hero" className="text-center text-balance flex flex-col items-center gap-10 relative">
+            <section id="hero" className="text-center text-balance flex flex-col items-center gap-10 relative min-h-screen">
                 <TypeAnimation
                     preRenderFirstString={true}
                     sequence={[
@@ -50,10 +50,9 @@ export const Home = () => {
                         Iniciar sesión
                     </Button>
                 </div>
-                <img src="./public/hero.svg" className="z-10" alt="" />
-                <div className="w-[10%] h-[10%] md:w-[200px] md:h-[200px] gradient"></div>
+                <img src="./public/hero.svg" className="z-10 " alt="" />
+                <div className="w-[10%] h-[10%] md:w-[200px] md:h-[200px] gradient "></div>
             </section>
-
         </motion.div>
     )
 }

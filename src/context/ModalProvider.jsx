@@ -27,7 +27,7 @@ export const ModalProvider = ({ children }) => {
 
     return (
         <>
-            <ModalContext.Provider value={{ onModal, test: 'hola' }}>
+            <ModalContext.Provider value={{ onModal }}>
                 { children }
                 <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="px-5">

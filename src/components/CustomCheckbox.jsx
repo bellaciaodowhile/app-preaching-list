@@ -82,20 +82,21 @@ export const CustomCheckbox = ({title, value}) => {
       aria-label={title}
       classNames={{
         base: cn(
-          "inline-flex max-w-md w-full m-0 checkbox-main",
-          "hover:bg-content2 items-center justify-start",
-          "cursor-pointer rounded-lg gap-2 p-4 border-2 border-indigo-100",
-          "data-[selected=true]:border-primary",
+          "inline-flex max-w-md m-0 checkbox-main bg-indigo-100 transition-all w-full border-[5px]",
+          "hover:bg-indigo-200 items-center justify-start",
+          "cursor-pointer rounded-lg gap-2 p-4 border-indigo-100",
+          "data-[selected=true]:border-[5px]",
+          "data-[selected=true]:border-indigo-200",
           "data-[selected=true]:bg-primary",
         ),
-        label: "w-full",
+        label: "",
       }}
       color="default"
       isSelected={isSelected}
       onValueChange={setIsSelected}
       value={value}
     >
-      <span className={`w-full flex justify-center text-indigo-500 text-center gap-2 uppercase ${ isSelected && 'text-white' }`}>
+      <span className={`w-full flex justify-center text-indigo-600 text-center gap-2 uppercase ${ isSelected && 'text-white' }`}>
         {title}
       </span>
     </Checkbox>
