@@ -6,11 +6,11 @@ import {
 } from "@dnd-kit/sortable";
 import { Senior } from "./Senior";
 import { FormStepsContext } from "../context/FormStepsContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 export const Seniors = () => {
-
-    const {  seniors, setSeniors} = useContext(FormStepsContext);
+ 
+    const { seniors, setSeniors, setSelectedPreachers, SELECTED_PREACHERS} = useContext(FormStepsContext);
 
     const handleDragEnd = (event) => {
         const { active, over } = event;
@@ -20,11 +20,26 @@ export const Seniors = () => {
             const oldIndex = seniors.findIndex((person) => person.id === active.id);
             const newIndex = seniors.findIndex((person) => person.id === over.id);
     
-            console.log(arrayMove(seniors, oldIndex, newIndex));
             return arrayMove(seniors, oldIndex, newIndex);
           });
         }
     };
+
+    useEffect(() => {
+        const updateSelectedPreachers = Object.entries(SELECTED_PREACHERS).map(([date, data]) => {
+            return {
+                date,
+                data: {
+                    ...data,
+                    senior: seniors[data.week % seniors.length].id
+                }
+            }
+        });
+        const updateSelectedPreachersObject = Object.fromEntries(updateSelectedPreachers.map(({date, data}) => [date, data]));
+        setSelectedPreachers(updateSelectedPreachersObject);
+        console.log(SELECTED_PREACHERS)
+
+    }, [setSelectedPreachers, SELECTED_PREACHERS, seniors]);
 
     return (
         <div className="max-w-[600px] m-auto">
