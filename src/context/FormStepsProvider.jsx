@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormStepsContext } from "./FormStepsContext"
 
 export const FormStepsProvider = ({ children }) => {
@@ -7,9 +7,11 @@ export const FormStepsProvider = ({ children }) => {
     const [DAYS_BY_MONTH, setDaysByMonth] = useState(false);
     const [SELECTED_PREACHERS, setSelectedPreachers] = useState([]);
     const [steps, setSteps] = useState({step: 1, action: 'next'});
-    const [dataPdf, setDataPdf] = useState({});
+    const [CONTENT_PDF, setContentPdf] = useState({});
     const [seniors, setSeniors] = useState([]);
     const [preachers, setPreachers] = useState([]);
+    const [isActiveInput, setIsActiveInput] = useState({});
+    const [session, setSession] = useState(true)
 
     return (
         <FormStepsContext.Provider value={{ 
@@ -23,12 +25,15 @@ export const FormStepsProvider = ({ children }) => {
             setSelectedPreachers,
             steps,
             setSteps,
-            dataPdf,
-            setDataPdf,
+            CONTENT_PDF,
+            setContentPdf,
             seniors,
             setSeniors,
             preachers,
-            setPreachers
+            setPreachers,
+            isActiveInput,
+            setIsActiveInput,
+            session
         }}>
             { children }
         </FormStepsContext.Provider>

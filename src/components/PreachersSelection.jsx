@@ -1,34 +1,24 @@
 import { useContext, useEffect, useState } from "react";
 import { FormStepsContext } from "../context/FormStepsContext";
 import { Step } from "./Step";
-import { Seniors } from "./Seniors";
+import { SeniorsOrder } from "./SeniorsOrder";
 import useSelectionPreachers from "../hooks/useSelectionPreachers";
-import { Card, Select, SelectItem, Input, Button, Link } from "@heroui/react";
+import { Card, Select, SelectItem, Input, Button } from "@heroui/react";
+import { useToggleVisibility } from "../hooks/useToggleVisibility";
 
 
 export const PreachersSelection = () => {
 
-    const { DAYS_BY_MONTH, seniors, SELECTED_PREACHERS, SELECTED_DAYS, preachers, setSelectedPreachers } = useContext(FormStepsContext);
+    const { DAYS_BY_MONTH, seniors, SELECTED_PREACHERS, SELECTED_DAYS, preachers, setSelectedPreachers, isActiveInput } = useContext(FormStepsContext);
     const { handleSelectionPreachers } = useSelectionPreachers();
-
-    const [isActiveInput, setIsActiveInput] = useState(false);
-
-    const toggleVisibility = (date) => {
-        
-    }
-
-    console.log(DAYS_BY_MONTH)
-
-    useEffect(() => {
-        // setSelectedPreachers(SELECTED_PREACHERS)
-    }, [setSelectedPreachers, SELECTED_PREACHERS]);
+    const { toggleVisibility } = useToggleVisibility();
 
     return (
         <Step
         key={`step-${3}`}
         step={3}
         label="Ahora añada un predicador para cada fecha:">
-            {Object.keys(DAYS_BY_MONTH).length !== 0 && (<Seniors></Seniors>)}
+            {Object.keys(DAYS_BY_MONTH).length !== 0 && (<SeniorsOrder/>)}
             {
                 Object.keys(DAYS_BY_MONTH).length !== 0 ? 
                 <ul className="mt-10 max-w-[600px] m-auto">
@@ -38,9 +28,8 @@ export const PreachersSelection = () => {
                             {
                                 DAYS_BY_MONTH[month].map((day, iDay) => {
                                     let seniorPerWeek = seniors[day.week.index % seniors.length];
-                                    const preacherCurrent = preachers[Number(SELECTED_PREACHERS[day.date]?.preacher) - 1];
-                                    console.log(preacherCurrent?.label)
-                                    console.log('%c SELECTED_PREACHERS[day.date]', 'padding: 10px; background: #D64265;')
+                                    const preacherText = isNaN(SELECTED_PREACHERS[day.date]?.preacher) ? SELECTED_PREACHERS[day.date]?.preacher : '';
+                                    console.log(Number(SELECTED_PREACHERS[day.date]?.preacher))
                                     return (<Card 
                                     key={iDay} 
                                     data-date={day.date}
@@ -48,32 +37,37 @@ export const PreachersSelection = () => {
                                     data-week={day.week.index}
                                     shadow="sm"
                                     className="p-5 mb-5 transition-all">
-                                        <span className="font-bold text-indigo-900 text-xl mb-3">{ day.text }</span>
+                                        <div className="flex items-center justify-between mb-3">
+                                            <h6 className="font-bold text-indigo-900 text-xl block">{ day.text }</h6>
+                                            <Button 
+                                            variant="bordered"
+                                            color="primary" 
+                                            size="md"
+                                            className="text-indigo-800 rounded-full"
+                                            onPress={()=> toggleVisibility(day.date)}>
+                                                {isActiveInput[day.date] ? 'Seleccionar un predicador' : 'Añadir predicador'}
+                                            </Button>
+                                        </div>
                                         <span className="text-xs uppercase text-foreground-500">Anciano de guardia: </span>
                                         <span className="font-bold text-foreground-700">{ seniorPerWeek.name }</span>
                                         <Select
-                                            className="my-3"
+                                            className={`my-3 ${!isActiveInput[day.date] || `hidden`}`}
                                             items={preachers}
                                             label={'Elija un predicador'}
-                                            selectedKeys={SELECTED_PREACHERS[day.date]?.preacher}
+                                            selectedKeys={isActiveInput[day.date] ? [] : [SELECTED_PREACHERS[day.date]?.preacher]}
                                             size="sm"
                                             value={SELECTED_PREACHERS[day.date]?.preacher || ''}
                                             onChange={(preacher)=> handleSelectionPreachers(day.date, preacher)}>
                                             {(preacher) => <SelectItem key={preacher.key}>{preacher.label}</SelectItem>}
                                         </Select>
-                                        <Button 
-                                        variant="light" 
-                                        color="primary" 
-                                        className="underline text-indigo-800"
-                                        onPress={()=> setIsActiveInput(!isActiveInput)}
-                                        >
-                                            Si el predicador no está en la lista, puedes añadirlo aquí.
-                                        </Button>
                                         <Input 
-                                        label="Predicador" 
-                                        placeholder="Escriba el nombre del predicador" 
-                                        className={isActiveInput || `hidden`} 
-                                        type="text" />
+                                            label="Predicador" 
+                                            placeholder="Escriba el nombre del predicador" 
+                                            className={`my-3 ${isActiveInput[day.date] || `hidden`}`} 
+                                            type="text"
+                                            value={isActiveInput[day.date] ? preacherText : ''}
+                                            onChange={(preacher)=> handleSelectionPreachers(day.date, preacher)}
+                                            maxLength={30}/>
                                     </Card>
                                 )})
                             }

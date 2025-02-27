@@ -9,7 +9,7 @@ const useSelectionPreachers = () => {
     const {
         SELECTED_PREACHERS,
         setSelectedPreachers,
-        preachers,
+        preachers
     } = useContext(FormStepsContext);
 
     useEffect(() => {
@@ -40,6 +40,7 @@ const useSelectionPreachers = () => {
                 } 
             }
         }
+
         setSelectedPreachers(prevState => ({
             ...prevState,
             [date]: {

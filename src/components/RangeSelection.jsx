@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { FormStepsContext } from "../context/FormStepsContext"
 import { Step } from "./Step";
 import { RangeCalendar } from "@heroui/react";
@@ -6,7 +6,11 @@ import { I18nProvider } from "@react-aria/i18n";
 
 export const RangeSelection = () => {
 
-    const { rangeDate, setRangeDate } = useContext(FormStepsContext);
+    const { rangeDate, setRangeDate, setSelectedPreachers } = useContext(FormStepsContext);
+
+    useEffect(() => {
+        setSelectedPreachers({})
+    }, [rangeDate, setSelectedPreachers]);
 
     return (
         <Step

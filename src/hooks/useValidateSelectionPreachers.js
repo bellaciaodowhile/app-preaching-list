@@ -7,7 +7,7 @@ import { borderAlert } from "../helpers/borderAlert";
 
 const useValidateSelectionPreachers = () => {
 
-    const { SELECTED_PREACHERS, DAYS_BY_MONTH } = useContext(FormStepsContext);
+    const { SELECTED_PREACHERS, DAYS_BY_MONTH, isActiveInput } = useContext(FormStepsContext);
 
     const lengthDaysByMonth = () => {
         const arrLength = [];
@@ -27,10 +27,19 @@ const useValidateSelectionPreachers = () => {
             return false;
         }
         for (const dateSelected in SELECTED_PREACHERS) {
+            console.log(isNaN(SELECTED_PREACHERS[dateSelected].preacher))
             if (SELECTED_PREACHERS[dateSelected].preacher == '') {
                 const cardDate = document.querySelector(`[data-date="${dateSelected}"]`)
                 borderAlert(cardDate, 'border-danger');
                 toast.error(`Debe seleccionar un predicador para la fecha ${dateSelected}, no se puede dejar en blanco ni repetir un predicador en el mismo mes`)
+                return false;
+            }
+            if (!isNaN(SELECTED_PREACHERS[dateSelected].preacher) && isActiveInput[dateSelected]) {
+                toast.error(`Debe seleccionar un predicador para la fecha ${dateSelected}`)
+                return false;
+            }
+            if (isNaN(SELECTED_PREACHERS[dateSelected].preacher) && !isActiveInput[dateSelected]) {
+                toast.error(`Debe seleccionar un predicador para la fecha ${dateSelected}`)
                 return false;
             }
         }

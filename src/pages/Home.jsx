@@ -1,14 +1,18 @@
 import { Button } from "@heroui/react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { TypeAnimation } from 'react-type-animation';
 import { ModalContext } from "../context/ModalContext";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { FormStepsContext } from "../context/FormStepsContext";
 
 export const Home = () => {
     
     const { onModal } = useContext(ModalContext);
-
+    const { setRangeDate } = useContext(FormStepsContext);
+    useEffect(() => {
+        setRangeDate(false);
+    }, [setRangeDate]);
     return (
         <motion.div 
         initial={{opacity: 0}}

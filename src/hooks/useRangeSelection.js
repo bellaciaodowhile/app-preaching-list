@@ -10,13 +10,11 @@ const useRangeSelection = () => {
         rangeDate,
         SELECTED_DAYS,
         SELECTED_PREACHERS,
-        setSelectedPreachers,
         setDaysByMonth,
     } = useContext(FormStepsContext);
 
     const handleRangeSelection = () => {
         console.log('handleRangeSelection');
-        setSelectedPreachers({})
         console.log('%c Step 2: Array de predicadores seleccionados', 'color: white; padding: 5px; background: #4635B1')
         console.log(SELECTED_PREACHERS)
         const start = new Date(`${rangeDate?.start.year}-${rangeDate?.start.month}-${rangeDate?.start.day}`);
@@ -28,13 +26,12 @@ const useRangeSelection = () => {
         let weekIndex = 0;
         let lastWeekNumber = null;
     
-        for (let index = 0; index < differenceInDays; index++) {
+        for (let index = 0; index <= differenceInDays; index++) {
             const currentDate = new Date(start);
             currentDate.setDate(start.getDate() + index);
     
             const dayName = DAYS[currentDate.getDay()];
             const month = MONTHS[currentDate.getMonth()];
-    
             if (SELECTED_DAYS.includes(dayName)) {
                 const dayOfMonth = currentDate.getDate();
                 const weekNumber = Math.ceil(dayOfMonth / 7);

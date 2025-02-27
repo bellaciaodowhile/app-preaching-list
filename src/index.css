@@ -80,3 +80,12 @@ body {
     top: 0;
     left: 0;
 }
+.input-search {
+    border-radius: 10px;
+}
+.input-search [data-slot="input-wrapper"] {
+    border-radius: 10px;
+}
+img {
+    pointer-events: none;
+}

@@ -6,14 +6,13 @@ import {
     NavbarMenuItem,
     NavbarContent,
     NavbarItem,
-    Button
+    Button,
 } from "@heroui/react";
 import { Link as LinkRouter } from "react-router-dom";
 import { useContext } from "react";
 import { ModalContext } from '../context/ModalContext'
-
-
-
+import { FormStepsContext } from "../context/FormStepsContext";
+import { Sidebar } from "./Sidebar";
 
 export const Navigation = () => {
 
@@ -32,19 +31,16 @@ export const Navigation = () => {
             path: '/register',
             name: 'Regístrate'
         },
+        {
+            path: '/dashboard',
+            name: 'Dashboard'
+        },
     ];
-
-    // const {isOpen, onOpen, onOpenChange} = useDisclosure();
-    
-    // const onSubmit = (e) => {
-    //     e.preventDefault();
-    // };
-
-
-
+    const { session } = useContext(FormStepsContext);
+    console.log(session)
     return(
-    <>
-        <Navbar disableAnimation className="p-5">
+    <div className="max-w-[1024px] m-auto">
+     <Navbar disableAnimation className="p-5 shadow-sm">
             <NavbarContent className="sm:hidden" justify="start">
                 <NavbarMenuToggle />
             </NavbarContent>
@@ -60,40 +56,56 @@ export const Navigation = () => {
                     <p className="font-bold text-inherit">Logo</p>
                 </NavbarBrand>
                 {
-                    navItems.map((item, index) => (
-                        <NavbarItem key={index}>
-                            <LinkRouter color="foreground" to={item.path}>
-                                {/* {item.name} */}
-                            </LinkRouter>
-                        </NavbarItem>
-                    ))
+                    session && (
+                        navItems.map((item, index) => (
+                            <NavbarItem key={index} >
+                                <LinkRouter color="foreground" to={item.path}>
+                                    {/* {item.name} */}
+                                </LinkRouter>
+                            </NavbarItem>
+                        ))
+                    )
                 }
             </NavbarContent>
 
-            <NavbarContent justify="end">
-                <NavbarItem>
-                    <Button 
-                        as={LinkRouter}
-                        className="text-indigo-600 bg-white"
-                        radius="full"
-                        size="md"
-                        variant="flat"
-                        to={'/'}>
-                        Inicio
-                    </Button>
-                </NavbarItem>
-                <NavbarItem>
-                    <Button 
-                        as={LinkRouter}
-                        className="bg-indigo-600 text-white"
-                        radius="full"
-                        size="md"
-                        variant="shadow"
-                        onPress={() => { onModal('register') }} >
-                        Regístrate
-                    </Button>
-                </NavbarItem>
-            </NavbarContent>
+            {!session && (
+                <NavbarContent justify="end">
+                    <NavbarItem>
+                        <Button 
+                            as={LinkRouter}
+                            className="text-white bg-orange-500"
+                            radius="full"
+                            size="md"
+                            variant="flat"
+                            to={'/dashboard'}>
+                            Dashboard
+                        </Button>
+                    </NavbarItem>
+                    <NavbarItem>
+                        <Button 
+                            as={LinkRouter}
+                            className="text-indigo-600 bg-white"
+                            radius="full"
+                            size="md"
+                            variant="flat"
+                            to={'/'}>
+                            Inicio
+                        </Button>
+                    </NavbarItem>
+                    <NavbarItem>
+                        <Button 
+                            as={LinkRouter}
+                            className="bg-indigo-600 text-white"
+                            radius="full"
+                            size="md"
+                            variant="shadow"
+                            onPress={() => { onModal('register') }} >
+                            Regístrate
+                        </Button>
+                    </NavbarItem>
+                </NavbarContent>)}
+
+            
 
             <NavbarMenu>
                 {navItems.map((item, index) => (
@@ -105,13 +117,7 @@ export const Navigation = () => {
                 ))}
             </NavbarMenu>
         </Navbar>
-
-        
-
-        
-
-
-
-    </>
+        <Sidebar></Sidebar>
+    </div>
     )
 }

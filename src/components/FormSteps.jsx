@@ -1,7 +1,7 @@
 import { Button } from "@heroui/react";
 import { useContext, useEffect } from "react";
 import { ListPDF } from "../components/ListPDF/ListPDF";
-import { PDFViewer } from '@react-pdf/renderer';
+import { PDFViewer, PDFDownloadLink } from '@react-pdf/renderer';
 import { MONTHS } from "../helpers/months";
 import { DAYS } from "../helpers/days";
 import { FormStepsContext } from "../context/FormStepsContext";
@@ -9,16 +9,21 @@ import useSteps from "../hooks/useSteps";
 import { RangeSelection } from "../components/RangeSelection";
 import { DaysSelection } from "../components/DaysSelection";
 import { PreachersSelection } from "../components/PreachersSelection";
+import { usePdfName } from "../hooks/usePdf";
 
 export const FormSteps = ({ preachers, seniors }) => {
     const { handleSteps, handleStepNext } = useSteps();
     const { 
         SELECTED_PREACHERS,
         steps,
-        DAYS_BY_MONTH,
         setSeniors,
-        setPreachers
+        setPreachers,
+        isActiveInput,
+        setContentPdf,
+        CONTENT_PDF,
     } = useContext(FormStepsContext);
+
+    const namePdf = usePdfName(CONTENT_PDF);
     
     useEffect(() => {
         setSeniors(seniors);
@@ -28,7 +33,7 @@ export const FormSteps = ({ preachers, seniors }) => {
         setPreachers(preachers);
     }, [preachers, setPreachers]);
 
-    const generatePdf = () => {
+     useEffect(() => {
         const dataPerMonths = {}
         for (let date in SELECTED_PREACHERS) {
             let month = MONTHS[date.split('-')[1] - 1];
@@ -41,18 +46,19 @@ export const FormSteps = ({ preachers, seniors }) => {
             
             dataPerMonths[month].push({
                 day: `${day} ${date.split('-')[0]}`,
-                preacher: preachers.filter(preacher => preacher.key === SELECTED_PREACHERS[date].preacher)[0].label,
-                senior: seniors.filter(x => x.id == SELECTED_PREACHERS[date].senior)[0].name,
+                preacher: isActiveInput[date] ? SELECTED_PREACHERS[date].preacher : preachers.filter(preacher => preacher.key === SELECTED_PREACHERS[date].preacher)[0]?.label,
+                senior: seniors.filter(x => x.id == SELECTED_PREACHERS[date].senior)[0]?.name,
             });
         }
-        console.log('%c Datos completos para el PDF', 'padding: 10px; background: blue;')
-        console.log(SELECTED_PREACHERS)
-        console.log(dataPerMonths)
+        setContentPdf(dataPerMonths);
+    }, [SELECTED_PREACHERS]);
+
+    const generatePdf = () => {
         return (
             <>
                 <div className="w-full h-[750px]">
                     <PDFViewer width="100%" height="100%">
-                        <ListPDF data={{dataPerMonths}} />
+                        <ListPDF data={{CONTENT_PDF, name: namePdf}}/>
                     </PDFViewer>
                 </div>
             </>
@@ -70,7 +76,6 @@ export const FormSteps = ({ preachers, seniors }) => {
                         {steps.step === 4 && generatePdf()}
                     </div>
                 </section>
-
                 <section id="buttons-fixed" className="fixed w-full bg-white z-20 bottom-0 p-10 left-0">
                     <div className="max-w-[1024px] flex justify-center items-center gap-10 m-auto">
                         {steps.step >= 2 && (
@@ -78,18 +83,29 @@ export const FormSteps = ({ preachers, seniors }) => {
                             className="bg-indigo-100 text-indigo-500 hover:-translate-y-1 hover:shadow-md w-full uppercase" 
                             radius="sm" 
                             size="lg"
-                            onClick={() => handleSteps(steps.step - 1, 'prev')}>
+                            onPress={() => handleSteps(steps.step - 1, 'prev')}>
                                 Regresar
                             </Button>
-                            )}
-                        <Button
-                        className={`bg-indigo-600 text-white hover:-translate-y-1 hover:shadow-md w-full uppercase`} 
-                        radius="sm" 
-                        size="lg"
-                        disabled={Object.keys(DAYS_BY_MONTH).length == 0 && steps.step == 3}
-                        onClick={handleStepNext}>
-                            { steps.step == 3 ? 'Generar PDF' : 'Siguiente' }
-                        </Button>
+                        )}
+                        {steps.step == 4 && (
+                            <PDFDownloadLink document={<ListPDF data={{CONTENT_PDF, name: namePdf}} />} fileName={`Lista de predicación - ${namePdf}.pdf`} className="w-full">
+                                <Button
+                                className={`bg-indigo-600 text-white hover:-translate-y-1 hover:shadow-md w-full uppercase`} 
+                                radius="sm" 
+                                size="lg">
+                                    Descargar PDF
+                                </Button>
+                            </PDFDownloadLink>
+                        )}
+                        {steps.step <= 3 && (
+                            <Button
+                            className={`bg-indigo-600 text-white hover:-translate-y-1 hover:shadow-md w-full uppercase`} 
+                            radius="sm" 
+                            size="lg"
+                            onPress={handleStepNext}>
+                                { steps.step == 3 ? 'Generar PDF' : 'Siguiente' }
+                            </Button>
+                        )}
                     </div>
                 </section>
             </div>

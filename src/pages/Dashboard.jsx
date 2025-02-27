@@ -1,0 +1,12 @@
+import { ContainerDashboard } from "../components/ContainerDashboard"
+
+export const Dashboard = () => {
+  return (
+    <div>
+      <ContainerDashboard>
+       <h1 className="text-8xl">Dashboard</h1>
+       <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores voluptatem officiis voluptate inventore, reiciendis provident perferendis in obcaecati, neque et aut ab id sit quas. Perspiciatis quam omnis dolorem suscipit, reprehenderit placeat non iure. Enim ex repellendus eaque vero laborum iste harum debitis corrupti exercitationem cum mollitia, cumque obcaecati adipisci assumenda sed fuga quis iure corporis illo expedita necessitatibus blanditiis modi? Incidunt et doloribus debitis placeat. Nostrum ipsa porro, minus fugit cum optio ex, ut obcaecati neque repellat sunt accusantium vitae. Quo non explicabo voluptas nostrum pariatur blanditiis ducimus nulla eveniet error rerum! Temporibus voluptates distinctio consequuntur eligendi soluta corrupti non, sit, maxime excepturi, ratione vel? Ipsum est molestias quas quisquam natus soluta, quia sapiente perspiciatis laudantium! Voluptatibus quibusdam eos ut, quaerat iure, reiciendis, in enim excepturi libero quo modi reprehenderit similique nam dignissimos nisi aperiam eveniet error fugiat explicabo distinctio minima aliquam veniam illum! Doloribus quibusdam facilis porro repellendus id, voluptates ea sint culpa deleniti iste veritatis rerum, obcaecati sed ex maiores optio quisquam, aliquam repudiandae atque delectus! At itaque pariatur accusamus similique beatae, possimus quibusdam laboriosam dicta, quo impedit molestias vel. Veniam quis nulla est porro minima ex aperiam ipsum omnis odio accusamus asperiores recusandae earum, quos facilis error iure excepturi neque unde vel voluptatibus laboriosam animi minus! Nobis minus, enim dignissimos iste qui tempora adipisci commodi nisi praesentium, labore laborum provident deleniti excepturi eligendi aliquam aut, quae illum delectus veniam at alias. Nostrum iure expedita inventore quod delectus doloremque illum voluptates nobis, earum ab recusandae minima labore tenetur distinctio asperiores numquam tempora, harum aliquam unde commodi soluta voluptas dolores non. Accusantium eius illum pariatur quibusdam dicta exercitationem expedita recusandae laudantium commodi vel totam deserunt ab modi earum sunt nulla fugit vitae, error nisi animi ex quia illo. Beatae sint a rerum perspiciatis officia quam aliquam fugit dolores!</p>
+      </ContainerDashboard>
+    </div>
+  )
+}
