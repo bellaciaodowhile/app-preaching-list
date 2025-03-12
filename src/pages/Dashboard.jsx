@@ -1,11 +1,66 @@
+import { useContext, useEffect, useState } from "react"
 import { ContainerDashboard } from "../components/ContainerDashboard"
+import { FormStepsContext } from "../context/FormStepsContext"
+import { verseBibleRandom } from "../helpers/verseBibleRandom"
+import { Card, CardBody } from "@heroui/react"
+import { HiOutlineRefresh } from "react-icons/hi";
+import { Link } from "react-router-dom"
+import { CardDashboard } from "../components/CardDashboard"
+
 
 export const Dashboard = () => {
+  const { preachersDB, seniorsDB, listsPreachersDB } = useContext(FormStepsContext)
+  const [cite, setCite] = useState(null)
+  const citeRandom = async () => {
+    try {
+      const books = await fetch('https://bible-api.deno.dev/api/books').then((response) => response.json());
+      const randomBook = books[Math.floor(Math.random() * books.length)];
+      const chapter = await fetch(`https://bible-api.deno.dev/api/read/rv1960/${randomBook.abrev}/${Math.floor(Math.random() * randomBook.chapters)}`).then((response) => response.json());
+      const verse = await chapter.vers[Math.floor(Math.random() * chapter?.vers?.length)];
+      setCite({
+          verse,
+          cite: `${chapter.name} ${chapter.chapter}:${verse.number}` 
+      })
+    } catch (error) {
+      console.log(Error)
+    }   
+  }
+  useEffect(() => {
+    citeRandom();
+  }, []); 
+  
   return (
     <div>
       <ContainerDashboard>
-       <h1 className="text-8xl">Dashboard</h1>
-       <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores voluptatem officiis voluptate inventore, reiciendis provident perferendis in obcaecati, neque et aut ab id sit quas. Perspiciatis quam omnis dolorem suscipit, reprehenderit placeat non iure. Enim ex repellendus eaque vero laborum iste harum debitis corrupti exercitationem cum mollitia, cumque obcaecati adipisci assumenda sed fuga quis iure corporis illo expedita necessitatibus blanditiis modi? Incidunt et doloribus debitis placeat. Nostrum ipsa porro, minus fugit cum optio ex, ut obcaecati neque repellat sunt accusantium vitae. Quo non explicabo voluptas nostrum pariatur blanditiis ducimus nulla eveniet error rerum! Temporibus voluptates distinctio consequuntur eligendi soluta corrupti non, sit, maxime excepturi, ratione vel? Ipsum est molestias quas quisquam natus soluta, quia sapiente perspiciatis laudantium! Voluptatibus quibusdam eos ut, quaerat iure, reiciendis, in enim excepturi libero quo modi reprehenderit similique nam dignissimos nisi aperiam eveniet error fugiat explicabo distinctio minima aliquam veniam illum! Doloribus quibusdam facilis porro repellendus id, voluptates ea sint culpa deleniti iste veritatis rerum, obcaecati sed ex maiores optio quisquam, aliquam repudiandae atque delectus! At itaque pariatur accusamus similique beatae, possimus quibusdam laboriosam dicta, quo impedit molestias vel. Veniam quis nulla est porro minima ex aperiam ipsum omnis odio accusamus asperiores recusandae earum, quos facilis error iure excepturi neque unde vel voluptatibus laboriosam animi minus! Nobis minus, enim dignissimos iste qui tempora adipisci commodi nisi praesentium, labore laborum provident deleniti excepturi eligendi aliquam aut, quae illum delectus veniam at alias. Nostrum iure expedita inventore quod delectus doloremque illum voluptates nobis, earum ab recusandae minima labore tenetur distinctio asperiores numquam tempora, harum aliquam unde commodi soluta voluptas dolores non. Accusantium eius illum pariatur quibusdam dicta exercitationem expedita recusandae laudantium commodi vel totam deserunt ab modi earum sunt nulla fugit vitae, error nisi animi ex quia illo. Beatae sint a rerum perspiciatis officia quam aliquam fugit dolores!</p>
+      <h1 className='text-3xl text-indigo-950 font-semibold mb-3'>Dashboard</h1>
+
+      <div className="grid grid-cols-3 mt-5 gap-5">
+        <CardDashboard path={'/predicadores'} title="Predicadores" number={preachersDB.length} />
+        <CardDashboard path={'/ancianos'} title="Ancianos" number={seniorsDB.length} />
+        <CardDashboard path={'/listas-de-predicacion'} title="Listas" number={listsPreachersDB.length} />
+      </div>
+
+
+      <Card className="border text-indigo-900 text-center mt-5">
+        {/* <Button isIconOnly onPress={citeRandom} className="mb-3">
+          <HiOutlineRefresh />
+        </Button> */}
+        <CardBody className="px-10 py-12 text-center">
+        {
+          cite ? (
+            <>
+              <span className="text-2xl">"{cite.verse.verse}"</span>
+              <span className="mt-3 text-3xl">{cite.cite}</span>
+            </>
+          ) : "Cargando versículo..."
+        }
+        </CardBody>
+        
+       {/* <img src="./public/dashboard.webp" alt="" /> */}
+      </Card>
+
+      
+
       </ContainerDashboard>
     </div>
   )

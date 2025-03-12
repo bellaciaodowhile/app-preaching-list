@@ -37,7 +37,6 @@ export const Navigation = () => {
         },
     ];
     const { session } = useContext(FormStepsContext);
-    console.log(session)
     return(
     <div className="max-w-[1024px] m-auto">
      <Navbar disableAnimation className="p-5 shadow-sm">
@@ -70,17 +69,6 @@ export const Navigation = () => {
 
             {!session && (
                 <NavbarContent justify="end">
-                    <NavbarItem>
-                        <Button 
-                            as={LinkRouter}
-                            className="text-white bg-orange-500"
-                            radius="full"
-                            size="md"
-                            variant="flat"
-                            to={'/dashboard'}>
-                            Dashboard
-                        </Button>
-                    </NavbarItem>
                     <NavbarItem>
                         <Button 
                             as={LinkRouter}

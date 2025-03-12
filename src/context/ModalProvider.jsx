@@ -10,6 +10,7 @@ import {
 
 import { RegisterUser } from "../components/Forms/RegisterUser";
 import { Login } from "../components/Forms/Login";
+import { FormPreacher } from "../components/Forms/FormPreacher";
 
 
 export const ModalProvider = ({ children }) => {
@@ -32,10 +33,11 @@ export const ModalProvider = ({ children }) => {
                 <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="px-5">
                 {(onClose) => {
-                    let modalBody;
+                    let modalBody, modalTitle;
 
                     switch (modalCurrent) {
                         case 'register':
+                            modalTitle = '¡Registrate grátis!'
                             modalBody = (
                                 <>
                                     <RegisterUser></RegisterUser>
@@ -43,9 +45,18 @@ export const ModalProvider = ({ children }) => {
                             );
                             break;
                         case 'login':
+                            modalTitle = 'Inicia sesión'
                             modalBody = (
                                 <>
                                     <Login />
+                                </>
+                            );
+                            break;
+                        case 'preacher':
+                            modalTitle = 'Agregando predicador'
+                            modalBody = (
+                                <>
+                                    <FormPreacher />
                                 </>
                             );
                             break;
@@ -58,7 +69,7 @@ export const ModalProvider = ({ children }) => {
                     return (
                         <>
                             <ModalHeader className="flex flex-col gap-1 text-center">
-                                {modalCurrent === 'register' ? '¡Regístrate gratis!' : 'Iniciar sesión'}
+                                { modalTitle }
                             </ModalHeader>
                             <ModalBody>
                                 {modalBody}

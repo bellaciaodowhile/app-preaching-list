@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { Link as LinkRouter } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-import { HiHome, HiUserGroup, HiHeart } from "react-icons/hi";
+import { HiHome, HiUserGroup, HiHeart, HiClipboardList  } from "react-icons/hi";
 
 
 
@@ -29,6 +29,11 @@ export const Sidebar = () => {
             label: 'Ancianos'
         },
         {
+            path: '/listas-de-predicacion',
+            icon: <HiClipboardList className="size-6"/>,
+            label: 'Listas de predicación'
+        },
+        {
             path: '#',
             icon: '',
             label: 'Cerrar sesión'
@@ -36,10 +41,11 @@ export const Sidebar = () => {
     ];
 
     const location = useLocation();
-    console.log(location.pathname)
     return (
         <>
-            <Card className="max-w-[300px] w-[300px] absolute z-10 rounded-xl mt-10 shadow-none bg-[#DFEEFE]">
+        {
+            session && (
+                <Card className="max-w-[300px] w-[300px] absolute z-10 rounded-xl mt-10 shadow-none bg-[#DFEEFE]">
 
                 <img src="./public/moises.svg" alt="" />
                 <CardHeader className="p px-4 flex flex-col items-center text-indigo-950">
@@ -51,22 +57,32 @@ export const Sidebar = () => {
                         {
                             sidebarLinks.map(link => (
                                 <li>
-                                    <LinkRouter 
-                                    to={link.path}
-                                    className={`w-full flex p-4 hover:bg-white rounded-md transition-all text-indigo-900 font-semibold items-center gap-3 ${link.label == 'Cerrar sesión' && 'justify-center bg-red-500 text-white mt-10'}
-                                    ${location.pathname == link.path && 'bg-white'}`}
-                                    >
-                                        {link.icon}<span>{link.label}</span>
-                                    </LinkRouter>
+                                    {
+                                        link.label != 'Cerrar sesión' ? (
+                                            <LinkRouter 
+                                                to={link.path}
+                                                className={`w-full flex p-4 hover:bg-white rounded-md transition-all text-indigo-900 font-semibold items-center gap-3 ${link.label == 'Cerrar sesión' && ''}
+                                                ${location.pathname == link.path && 'bg-white'}`}
+                                                >
+                                                    {link.icon}<span>{link.label}</span>
+                                            </LinkRouter>
+                                        ) : (
+                                            <Button className="justify-center rounded-md bg-red-500 text-white mt-10 hover:bg-red-400 w-full flex p-7 text-md">
+                                                { link.label }
+                                            </Button>
+                                        )
+                                    }
                                 </li>
                             ))
                         }
                     </ul>
                 </CardBody>
                 <CardFooter>
-                  
+                
                 </CardFooter>
-            </Card> 
+                </Card> 
+            )
+        }  
         </>
     )
 }

@@ -11,6 +11,8 @@ import { useContext } from 'react';
 import { ProtectedComponent } from './ProtectedComponent';
 import { Preachers } from './Preachers';
 import { Seniors } from './Seniors';
+import { ListsPreachers } from './ListsPreachers';
+
 
 
 export const AnimatedRoutes = () => {
@@ -19,13 +21,42 @@ export const AnimatedRoutes = () => {
     return (
         <>
             <AnimatePresence>
-                <Routes location={location} key={location.pathname}>
-                    <Route index path="/"  element={<ProtectedComponent element={<Home/>} isAuthenticated={session}/> }/>
-                    <Route path="/demo" element={<ProtectedComponent element={<Demo/>} isAuthenticated={session}/>} />
-                    <Route path="/dashboard" element={ <ProtectedComponent element={<Dashboard/>} isAuthenticated={!session}/> }></Route>
-                    <Route path="/predicadores" element={ <ProtectedComponent element={<Preachers/>} isAuthenticated={!session}/> }></Route>
-                    <Route path="/ancianos" element={ <ProtectedComponent element={<Seniors/>} isAuthenticated={!session}/> }></Route>
-                    <Route path="*" element={ <NotFound /> }></Route>
+                <Routes>
+                {session ? (
+                    // Si la sesión es verdadera, mostramos las rutas que no son "/" ni "/demo"
+                    <>
+                        <Route path="/dashboard" element={<ProtectedComponent 
+                            element={<Dashboard />} 
+                            isAuthenticated={session} 
+                            priority={true} />} />
+                        <Route path="/predicadores" element={<ProtectedComponent 
+                            element={<Preachers />} 
+                            isAuthenticated={session} 
+                            priority={true} />} />
+                        <Route path="/ancianos" element={<ProtectedComponent 
+                            element={<Seniors />} 
+                            isAuthenticated={session} 
+                            priority={true} />} />
+                        <Route path="/listas-de-predicacion" element={<ProtectedComponent 
+                            element={<ListsPreachers />} 
+                            isAuthenticated={session} 
+                            priority={true} />} />
+                        <Route path="*" element={<NotFound />} />
+                    </>
+                ) : (
+                    // Si la sesión es falsa, mostramos las rutas "/" y "/demo"
+                    <>
+                        <Route index path="/" element={<ProtectedComponent 
+                            element={<Home />} 
+                            isAuthenticated={session} 
+                            priority={false} />} />
+                        <Route path="/demo" element={<ProtectedComponent 
+                            element={<Demo />} 
+                            isAuthenticated={session} 
+                            priority={false} />} />
+                        <Route path="*" element={<NotFound />} />
+                    </>
+                )}
                 </Routes>
             </AnimatePresence>
         </>

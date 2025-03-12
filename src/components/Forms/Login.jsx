@@ -6,8 +6,14 @@ import {
 
 export const Login = () => {
 
+    
+
     const onSubmit = (e) => {
         e.preventDefault();
+        const data = Object.fromEntries(new FormData(e.currentTarget))
+        console.log(data)
+
+
     };
 
     return (
@@ -21,7 +27,7 @@ export const Login = () => {
                     }
                     }}
                     label="Correo electrónico"
-                    name="email_"
+                    name="email"
                     type="email"
                 />
                 <Input

@@ -1,10 +1,79 @@
-import React from 'react'
+import { Button, Input, Form } from '@heroui/react'
+import { ContainerDashboard } from './ContainerDashboard'
+import { ModalContext } from '../context/ModalContext';
+import { useContext, useRef, useState } from 'react';
+import { useForms } from '../hooks/useForms';
+import { ListSearch } from './Lists/ListSearch';
+import { FormStepsContext } from '../context/FormStepsContext';
 
 export const Seniors = () => {
+    const formRef = useRef(null);
+    const { onModal } = useContext(ModalContext);
+    const { seniorsDB, setSeniorsDB } = useContext(FormStepsContext)
+    const { onSubmit, submitted, setSubmitted } = useForms();
+    const [form, setForm] = useState(false);
+    const closeForm = () => {
+        setForm(!form);
+        setSubmitted(null);
+        formRef.current.reset();
+    }
+
     return (
         <>
-            <h1 className='text-7xl text-orange-500'>Ancianos</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias ipsa impedit esse neque ex non et modi iure dignissimos sunt quae iste, pariatur dolore repudiandae voluptates minima quis nostrum adipisci quasi eaque ad sapiente animi odio? Recusandae harum illum, non, ducimus reiciendis consectetur hic earum asperiores sapiente blanditiis suscipit expedita enim odit odio pariatur reprehenderit. Magnam cumque blanditiis reiciendis sint, repellat sit quidem mollitia labore autem nihil recusandae provident unde hic accusamus repellendus temporibus consequuntur vitae deserunt impedit aliquam alias, minima vel totam. Obcaecati perspiciatis veritatis velit tempore excepturi nostrum expedita, aperiam veniam dicta dignissimos fugit labore tenetur nihil magnam iure. Doloribus nisi iste ratione dignissimos harum aperiam quo eos repellendus porro voluptatum adipisci dolorum enim, facere quas sit alias voluptatibus pariatur fugiat soluta eveniet. Explicabo corporis placeat debitis assumenda exercitationem cum fuga eveniet earum quaerat, pariatur dolorem autem perferendis soluta ipsa labore quidem recusandae, minus sit minima quibusdam dignissimos ab repellendus amet. In, sed! Iste dolore quae vel! Voluptates tempore illo, ipsa impedit est, voluptas commodi sed explicabo quidem ratione praesentium dicta alias distinctio, quisquam nihil inventore. Enim quisquam optio quos doloribus itaque. Porro, mollitia natus cupiditate quidem maiores id officia at voluptas libero qui necessitatibus doloribus? Odit adipisci corporis veritatis corrupti optio, ipsa voluptates fuga expedita iste earum explicabo, id obcaecati provident molestiae nam soluta nemo autem molestias mollitia alias officia rerum vitae quia maiores. Deserunt, modi consequatur quod minus consequuntur et, quidem, molestiae est perferendis eveniet itaque neque id veniam. Sequi amet numquam sint nesciunt totam dolorum nobis aliquam voluptatibus, quasi quaerat repellendus eos ut illo error nam tempora aliquid commodi molestiae, autem magnam temporibus. Doloremque ipsam a beatae quos odit dolor dolorum quae iure, labore velit. Neque, in. Excepturi corporis illo ratione molestiae perferendis harum debitis perspiciatis, pariatur, velit, accusamus sint maiores incidunt soluta quaerat quo.</p>
+           <ContainerDashboard>
+            <h1 className='text-3xl text-indigo-950 font-semibold mb-3'>Ancianos</h1>
+            <Button className='text-white font-semibold uppercase bg-indigo-950' onPress={closeForm}>
+                {form ? 'Agregando' : 'Agregar'} anciano
+            </Button>
+
+            <Form 
+            className={`border-3 border-dashed border-indigo-500 p-5 rounded-md my-10 ${ form ? 'flex animate__fadeIn' : `hidden`  } animate__animated`}
+            onSubmit={onSubmit}
+            ref={formRef}
+            >
+                <h4 className='text-xl font-semibold'>Registro de ancianos</h4>
+                <Input
+                    isRequired
+                    errorMessage=""
+                    label="Nombre"
+                    name="name"
+                    placeholder="Nombre del anciano"
+                    type="text"
+                    className='mt-2'
+                />
+                <Input
+                    isRequired
+                    errorMessage=""
+                    label="Apellido"
+                    name="lastname"
+                    placeholder="Apellido del anciano"
+                    type="text"
+                    className='mt-2'
+                />
+                <Input
+                    label="Número celular"
+                    name="phone"
+                    placeholder="04121234123"
+                    type="text"
+                    className='mt-2'
+                />
+                <div className="flex mt-5 gap-3 w-full">
+                    <Button 
+                    type="submit" 
+                    className='text-white font-semibold py-6 text-xl w-full bg-green-500'>Registrar</Button>
+                    <Button 
+                    type="button" 
+                    className='text-white font-semibold py-6 text-xl w-full bg-red-500' 
+                    onPress={closeForm}>Cerrar</Button>
+                </div>
+                {submitted && (
+                    <div className="text-small text-default-500">
+                    Has enviado: <code>{JSON.stringify(submitted)}</code>
+                    </div>
+                )}
+            </Form>
+            <ListSearch items={seniorsDB} section="seniors"/>
+           </ContainerDashboard>
         </>
     )
 }
