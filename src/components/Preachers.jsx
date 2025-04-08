@@ -1,10 +1,12 @@
 import { Button, Input, Form, Card, CardBody, Pagination, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@heroui/react'
 import { ContainerDashboard } from './ContainerDashboard'
 import { ModalContext } from '../context/ModalContext';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useForms } from '../hooks/useForms';
 import { ListSearch } from './Lists/ListSearch';
 import { FormStepsContext } from '../context/FormStepsContext';
+import { toast } from "sonner";
+import axios from 'axios';
 
 export const Preachers = () => {
     const formRef = useRef(null);
@@ -12,11 +14,49 @@ export const Preachers = () => {
     const { preachersDB, setPreachersDB } = useContext(FormStepsContext)
     const { onSubmit, submitted, setSubmitted } = useForms();
     const [form, setForm] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const closeForm = () => {
         setForm(!form);
         setSubmitted(null);
         formRef.current.reset();
     }
+
+    const handleAddPreacher = (e) => {
+        e.preventDefault();
+        // alert('Hello!')
+
+        const data = Object.fromEntries(new FormData(e.currentTarget));
+        if (data.name === '' || data.lastname === '' || data.church === '') {
+            return toast.error('Los campos: Nombre, Apellido e Iglesia son obligatorios.')
+        }
+
+        try {
+            axios.post('http://localhost:5100/preachers/create', data)
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(error => {
+                console.error('There was an error sending the mail!', error);
+            });
+        } catch (error) {
+            console.log(error)
+        }
+        console.log(data)
+    }
+
+    const fetchPreachers = async () => {
+        try {
+            const res = await axios.get('http://localhost:5100/preachers/');
+            setPreachersDB(res.data.data);
+            setIsLoading(false)
+        } catch (error) {
+            console.error('Error get-preachers', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPreachers();
+    }, []);
 
     return (
         <>
@@ -28,7 +68,7 @@ export const Preachers = () => {
 
             <Form 
             className={`border-3 border-dashed border-indigo-500 p-5 rounded-md my-10 ${ form ? 'flex animate__fadeIn' : `hidden`  } animate__animated`}
-            onSubmit={onSubmit}
+            onSubmit={handleAddPreacher}
             ref={formRef}
             >
                 <h4 className='text-xl font-semibold'>Registro de predicadores</h4>
@@ -81,7 +121,11 @@ export const Preachers = () => {
                     </div>
                 )}
             </Form>
-            <ListSearch items={preachersDB} section="preacher"/>
+            {isLoading ? ( // Conditional rendering based on loading state
+                <p>Loading...</p> // Show loading message while fetching data
+            ) : (
+                <ListSearch items={preachersDB} section="preacher" /> // Render ListSearch after loading is complete
+            )}
            </ContainerDashboard>
         </>
     )

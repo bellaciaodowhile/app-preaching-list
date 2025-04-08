@@ -15,13 +15,13 @@ export const ListSearch = ({ items, section }) => {
     { key: '5', label: "5" },
     { key: '10', label: "10" },
     { key: '20', label: "20" },
-    { key: items.length || 'Todos', label: 'Todos' }
+    { key: items?.length || 'Todos', label: 'Todos' }
   ];
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(data?.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePagination = (page) => {
     setCurrentPage(page)
@@ -40,8 +40,13 @@ export const ListSearch = ({ items, section }) => {
       removeAccents(`iglesia ${item?.church?.toLowerCase()}`).includes(searchTerm) || 
       removeAccents(item?.phone?.toLowerCase())?.includes(searchTerm)
     )
-    setData(filteredData);
-    setCurrentPage(1);
+
+    if (e.target.value.toLowerCase() == '') {
+      setData(items)
+    } else {
+      setData(filteredData);
+      setCurrentPage(1);
+    }
   }
   return (
     <>
@@ -58,8 +63,8 @@ export const ListSearch = ({ items, section }) => {
             ))
           }
         </Select>
-        {currentItems.length > 0 && (<span className="my-5 block">Mostrando { itemsPerPage } de { data?.length ||  0}</span>)}
-
+        {currentItems?.length > 0 && (<span className="my-5 block">Mostrando { itemsPerPage } de { data?.length ||  0}</span>)}
+           {`Current Items: ${currentItems?.length}`}
         <Input
         placeholder="Busca aquí"
         className='mt-5 border border-indigo-500 input-search bg-white'
@@ -72,9 +77,9 @@ export const ListSearch = ({ items, section }) => {
 
         <div className="mt-10 gap-5 flex flex-col">
             {
-              currentItems?.length > 0 ? currentItems?.map((item, index) => (
+             (currentItems?.length > 0) ? currentItems?.map((item, index) => (
                 <ListItem key={`list-item-${index}`} name={item.name} church={item.church}  phone={item.phone} section={section}/>
-              )) : 'No hay ningún registro.'
+              )) : `No hay ningún registro.`
             }
             <div className="m-auto flex justify-center mt-10">
                 <Pagination initialPage={currentPage} total={totalPages} onChange={handlePagination} />

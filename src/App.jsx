@@ -10,16 +10,16 @@ import { Toaster } from 'sonner';
 export default function App() {
   return (
     <>
-    <ModalProvider>
       <FormStepsProvider>
-        <Toaster position="top-center" richColors />
-        <Navigation></Navigation>
-          <Container>
-            <AnimatedRoutes></AnimatedRoutes>
-          </Container>
-        <Footer></Footer>
+        <ModalProvider>
+            <Toaster position="top-center" richColors />
+            <Navigation></Navigation>
+              <Container>
+                <AnimatedRoutes></AnimatedRoutes>
+              </Container>
+            <Footer></Footer>
+        </ModalProvider>
       </FormStepsProvider>
-    </ModalProvider>
     </>
   );
 }

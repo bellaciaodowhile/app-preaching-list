@@ -12,9 +12,9 @@ export const FormStepsProvider = ({ children }) => {
     const [seniors, setSeniors] = useState([]);
     const [preachers, setPreachers] = useState([]);
     const [isActiveInput, setIsActiveInput] = useState({});
-    const [session, setSession] = useState(false)
+    const [session, setSession] = useState(true) // change status
     const [bibleCite, setBibleCite] = useState({});
-    const [preachersDB, setPreachersDB] = useState([
+    const PREACHERS_DB = [
         {
             name: 'Nombre Apellido',
             church: 'Sabanita',
@@ -49,7 +49,8 @@ export const FormStepsProvider = ({ children }) => {
             church: 'llano alto',
             phone: '0412-00012367'
         },
-    ]);
+    ];
+    const [preachersDB, setPreachersDB] = useState(PREACHERS_DB);
     const [seniorsDB, setSeniorsDB] = useState([
         {
             name: 'Aciano One',
@@ -109,6 +110,7 @@ export const FormStepsProvider = ({ children }) => {
             isActiveInput,
             setIsActiveInput,
             session,
+            setSession,
             preachersDB,
             setPreachersDB,
             seniorsDB,

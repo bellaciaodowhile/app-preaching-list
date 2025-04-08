@@ -14,14 +14,9 @@ export const useForms = () => {
         return submitted;
     }
 
-    // const resetForm = (ref) => {
-    //     ref.current.reset
-    // }
-
     return {
         onSubmit,
         submitted,
         setSubmitted,
-        // resetForm
     }
 }

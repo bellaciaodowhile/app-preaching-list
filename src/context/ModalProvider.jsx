@@ -23,12 +23,12 @@ export const ModalProvider = ({ children }) => {
         console.log('On Modal: ' + current);
     }
 
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const {isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
 
     return (
         <>
-            <ModalContext.Provider value={{ onModal }}>
+            <ModalContext.Provider value={{ onModal, onClose }}>
                 { children }
                 <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
                 <ModalContent className="px-5">
